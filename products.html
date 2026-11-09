@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - ShopEase</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <header>
+        <div class="navbar">
+            <h2 class="logo">ShopEase 💗</h2>
+
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="cart.html">Cart 🛒 (<span id="cartCount">0</span>)</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+            <button id="menuBtn" class="menu-btn">
+                ☰ Categories
+            </button>
+        </div>
+
+        <!-- Category Menu -->
+        <div id="categoryMenu" class="category-menu">
+            <button onclick="filterCategory('All')">All Products</button>
+            <button onclick="filterCategory('Electronics')">Electronics</button>
+            <button onclick="filterCategory('Fashion')">Fashion</button>
+            <button onclick="filterCategory('Accessories')">Accessories</button>
+            <button onclick="filterCategory('Beauty')">Beauty 💄</button>
+            <button onclick="filterCategory('Jewellery')">Jewellery 💎</button>
+        </div>
+    </header>
+
+    <!-- Products Section -->
+    <section class="products-section" id="products">
+
+        <h2>Explore Our Products 🛍️</h2>
+
+        <p class="section-subtitle">
+            Discover something beautiful for yourself!
+        </p>
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Search your favourite products..."
+        >
+
+        <div id="productList" class="product-container"></div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <h2>ShopEase 💗</h2>
+        <p>Your happiness, our priority!</p>
+        <p>© 2026 ShopEase. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders | ShopEase</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo">ShopEase 💗</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart</a>
+        <a href="my-account.html">My Account</a>
+        <a href="my-orders.html">My Orders</a>
+    </nav>
+</header>
+
+<section class="orders-section">
+    <h1>My Orders 🛍️</h1>
+    <p class="orders-subtitle">All your ShopEase purchases in one place 💗</p>
+
+    <div id="ordersList"></div>
+
+    <a href="products.html" class="shop-btn">
+        Continue Shopping
+    </a>
+</section>
+
+<footer>
+    <p>© 2026 ShopEase. Made with 💗</p>
+</footer>
+
+<script>
+const user = JSON.parse(
+    localStorage.getItem("shopEaseCurrentUser") || "null"
+);
+
+if (!user) {
+    window.location.href = "login.html";
+}
+
+const ordersList = document.getElementById("ordersList");
+
+if (user) {
+    const orders = JSON.parse(
+        localStorage.getItem("shopEaseOrders") || "[]"
+    );
+
+    const customerOrders = orders.filter(
+        order => order.customer &&
+                 order.customer.email === user.email
+    );
+
+    if (customerOrders.length === 0) {
+        ordersList.textContent = "You haven't placed any orders yet 💗";
+    } else {
+        customerOrders.slice().reverse().forEach((order, index) => {
+            const card = document.createElement("div");
+            card.className = "order-card";
+
+            const heading = document.createElement("h2");
+            heading.textContent = "Order #" + (customerOrders.length - index);
+
+            const status = document.createElement("span");
+            status.className = "order-status";
+            status.textContent = "Demo Order Placed";
+
+            const date = document.createElement("p");
+            date.textContent = "Date: " +
+                new Date(order.date).toLocaleString();
+
+            const total = document.createElement("h3");
+            total.textContent = "Total: ₹" + order.total;
+
+            const addressHeading = document.createElement("h3");
+            addressHeading.textContent = "Delivery Address";
+
+            const address = document.createElement("p");
+            const a = order.address;
+            address.textContent =
+                a.house + ", " + a.street + ", " +
+                a.city + ", " + a.state + " - " + a.pincode;
+
+            const productsHeading = document.createElement("h3");
+            productsHeading.textContent = "Products";
+
+            card.append(heading, status, date, total,
+                        addressHeading, address, productsHeading);
+
+            order.items.forEach(item => {
+                const product = document.createElement("p");
+                product.textContent =
+                    item.name + " × " + item.quantity;
+                card.appendChild(product);
+            });
+
+            ordersList.appendChild(card);
+        });
+    }
+}
+</script>
+
+</body>
+</html>

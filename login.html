@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | ShopEase</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo">ShopEase 💗</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart</a>
+    </nav>
+</header>
+
+<section class="auth-section">
+    <div class="auth-card">
+        <h1>Welcome to ShopEase 💗</h1>
+        <p>Create your account or login to continue shopping.</p>
+
+        <div class="auth-tabs">
+            <button type="button" id="loginTab" class="active"
+                onclick="showLogin()">Login</button>
+            <button type="button" id="registerTab"
+                onclick="showRegister()">Create Account</button>
+        </div>
+
+        <form id="loginForm">
+            <h2>Login</h2>
+
+            <input type="email" id="loginEmail"
+                placeholder="Email Address" required>
+
+            <input type="password" id="loginPassword"
+                placeholder="Password" required>
+
+            <button type="submit">Login 💗</button>
+            <p id="loginMessage" class="auth-message"></p>
+        </form>
+
+        <form id="registerForm" hidden>
+            <h2>Create Account</h2>
+
+            <input type="text" id="registerName"
+                placeholder="Full Name" required>
+
+            <input type="email" id="registerEmail"
+                placeholder="Email Address" required>
+
+            <input type="password" id="registerPassword"
+                placeholder="Create Password (minimum 6 characters)"
+                minlength="6" required>
+
+            <button type="submit">Create Account 💗</button>
+            <p id="registerMessage" class="auth-message"></p>
+        </form>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 ShopEase. Made with 💗</p>
+</footer>
+
+<script>
+function showLogin() {
+    document.getElementById("loginForm").hidden = false;
+    document.getElementById("registerForm").hidden = true;
+    document.getElementById("loginTab").classList.add("active");
+    document.getElementById("registerTab").classList.remove("active");
+}
+
+function showRegister() {
+    document.getElementById("loginForm").hidden = true;
+    document.getElementById("registerForm").hidden = false;
+    document.getElementById("registerTab").classList.add("active");
+    document.getElementById("loginTab").classList.remove("active");
+}
+
+document.getElementById("registerForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("registerName").value.trim();
+    const email = document.getElementById("registerEmail").value.trim().toLowerCase();
+    const password = document.getElementById("registerPassword").value;
+
+    if (password.length < 6) {
+        document.getElementById("registerMessage").textContent =
+            "Password must contain at least 6 characters.";
+        return;
+    }
+
+    const users = JSON.parse(localStorage.getItem("shopEaseUsers") || "[]");
+
+    if (users.some(user => user.email === email)) {
+        document.getElementById("registerMessage").textContent =
+            "This email is already registered. Please login.";
+        return;
+    }
+
+    users.push({ name, email, password });
+
+    localStorage.setItem("shopEaseUsers", JSON.stringify(users));
+    document.getElementById("registerMessage").textContent =
+        "Account created successfully! Please login. 💗";
+
+    this.reset();
+    showLogin();
+});
+
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+    const password = document.getElementById("loginPassword").value;
+
+    const users = JSON.parse(localStorage.getItem("shopEaseUsers") || "[]");
+    const user = users.find(item =>
+        item.email === email && item.password === password
+    );
+
+    if (!user) {
+        document.getElementById("loginMessage").textContent =
+            "Invalid email or password.";
+        return;
+    }
+
+    localStorage.setItem("shopEaseCurrentUser", JSON.stringify({
+        name: user.name,
+        email: user.email
+    }));
+
+    window.location.href = "checkout.html";
+});
+</script>
+
+</body>
+</html>

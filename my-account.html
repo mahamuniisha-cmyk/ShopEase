@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | ShopEase</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="navbar">
+    <div class="logo">ShopEase 💗</div>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart</a>
+        <a href="my-account.html">My Account</a>
+        <a href="my-orders.html">My Orders</a>
+    </nav>
+</header>
+
+<section class="account-section">
+    <div class="account-card">
+        <h1>My Account 💗</h1>
+        <div class="account-avatar">👩</div>
+
+        <h2 id="accountName"></h2>
+        <p id="accountEmail"></p>
+
+        <div class="account-details">
+            <h2>My Latest Order 🛍️</h2>
+            <div id="orderDetails"></div>
+        </div>
+
+        <button onclick="logout()" class="logout-btn">
+            Logout
+        </button>
+    </div>
+</section>
+
+<footer>
+    <p>© 2026 ShopEase. Made with 💗</p>
+</footer>
+
+<script>
+const user = JSON.parse(
+    localStorage.getItem("shopEaseCurrentUser") || "null"
+);
+
+if (!user) {
+    window.location.href = "login.html";
+} else {
+    document.getElementById("accountName").textContent = user.name;
+    document.getElementById("accountEmail").textContent = user.email;
+}
+
+const order = JSON.parse(
+    localStorage.getItem("shopEaseLastOrder") || "null"
+);
+
+const orderDetails = document.getElementById("orderDetails");
+
+if (order && user && order.customer.email === user.email) {
+    const address = order.address;
+
+    const addressBox = document.createElement("div");
+    addressBox.innerHTML = "";
+
+    const orderTitle = document.createElement("p");
+    orderTitle.textContent = "Order Total: ₹" + order.total;
+
+    const addressTitle = document.createElement("h3");
+    addressTitle.textContent = "Delivery Address";
+
+    const addressText = document.createElement("p");
+    addressText.textContent =
+        address.house + ", " +
+        address.street + ", " +
+        address.city + ", " +
+        address.state + " - " +
+        address.pincode;
+
+    const itemsTitle = document.createElement("h3");
+    itemsTitle.textContent = "Products Ordered";
+
+    orderDetails.append(
+        orderTitle,
+        addressTitle,
+        addressText,
+        itemsTitle
+    );
+
+    order.items.forEach(item => {
+        const product = document.createElement("p");
+        product.textContent =
+            item.name + " × " + item.quantity;
+        orderDetails.appendChild(product);
+    });
+} else {
+    orderDetails.textContent = "You haven't placed an order yet.";
+}
+
+function logout() {
+    localStorage.removeItem("shopEaseCurrentUser");
+    window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

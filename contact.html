@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | ShopEase</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <header class="navbar">
+        <div class="logo">ShopEase 💗</div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <!-- CONTACT SECTION -->
+    <section class="contact-section">
+
+        <h1>Contact Us 💌</h1>
+        <p>We would love to hear from you!</p>
+
+        <div class="contact-container">
+
+            <div class="contact-info">
+                <h2>Get In Touch</h2>
+
+                <p>📧 Email: support@shopease.com</p>
+                <p>📞 Phone: +91 9876543210</p>
+                <p>📍 Location: India</p>
+
+                <h3>We Are Here To Help! 💗</h3>
+                <p>
+                    Have questions about our products or your shopping
+                    experience? Send us a message.
+                </p>
+            </div>
+
+            <form class="contact-form" id="contactForm">
+
+                <input
+                    type="text"
+                    id="contactName"
+                    placeholder="Your Name"
+                    required
+                >
+
+                <input
+                    type="email"
+                    id="contactEmail"
+                    placeholder="Your Email"
+                    required
+                >
+
+                <input
+                    type="text"
+                    id="contactSubject"
+                    placeholder="Subject"
+                    required
+                >
+
+                <textarea
+                    id="contactMessage"
+                    placeholder="Write your message..."
+                    rows="6"
+                    required
+                ></textarea>
+
+                <button type="submit">Send Message 💗</button>
+
+                <p id="contactStatus"></p>
+
+            </form>
+
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 ShopEase. Made with 💗</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <script>
+        const contactForm = document.getElementById("contactForm");
+
+        contactForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            document.getElementById("contactStatus").textContent =
+                "Thank you! Your message has been recorded in this demo.";
+
+            contactForm.reset();
+        });
+    </script>
+
+</body>
+</html>
